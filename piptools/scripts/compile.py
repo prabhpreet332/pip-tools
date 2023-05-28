@@ -621,6 +621,7 @@ def cli(
     linesep = _determine_linesep(
         strategy=newline, filenames=(output_file.name, *src_files)
     )
+    import pdb;pdb.set_trace()
 
     ##
     # Output
