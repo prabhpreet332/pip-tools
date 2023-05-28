@@ -14,7 +14,7 @@ from pip._internal.utils.compat import stdlib_pkgs
 
 from ._compat.pip_compat import Distribution, dist_requires
 from .exceptions import IncompatibleRequirements
-from .logging import log
+from .custom_logging import log
 from .utils import (
     flat_map,
     format_requirement,

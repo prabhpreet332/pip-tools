@@ -32,7 +32,7 @@ from pip._vendor.requests import RequestException, Session
 
 from .._compat import create_wheel_cache
 from ..exceptions import NoCandidateFound
-from ..logging import log
+from ..custom_logging import log
 from ..utils import (
     as_tuple,
     is_pinned_requirement,

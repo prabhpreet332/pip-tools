@@ -29,7 +29,7 @@ from piptools.repositories.base import BaseRepository
 
 from ._compat import create_wheel_cache
 from .exceptions import PipToolsError
-from .logging import log
+from .custom_logging import log
 from .utils import (
     UNSAFE_PACKAGES,
     as_tuple,
@@ -233,6 +233,7 @@ class LegacyResolver(BaseResolver):
         anymore.  Protects against infinite loops by breaking out after a max
         number rounds.
         """
+        import pdb;pdb.set_trace()
         if self.clear_caches:
             self.dependency_cache.clear()
             self.repository.clear_caches()

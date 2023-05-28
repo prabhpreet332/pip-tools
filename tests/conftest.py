@@ -26,7 +26,7 @@ from pip._vendor.pkg_resources import Requirement
 from piptools._compat.pip_compat import PIP_VERSION, uses_pkg_resources
 from piptools.cache import DependencyCache
 from piptools.exceptions import NoCandidateFound
-from piptools.logging import log
+from piptools.custom_logging import log
 from piptools.repositories import PyPIRepository
 from piptools.repositories.base import BaseRepository
 from piptools.resolver import BacktrackingResolver, LegacyResolver

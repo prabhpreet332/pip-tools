@@ -20,7 +20,7 @@ from .._compat import parse_requirements
 from ..cache import DependencyCache
 from ..exceptions import NoCandidateFound, PipToolsError
 from ..locations import CACHE_DIR
-from ..logging import log
+from ..custom_logging import log
 from ..repositories import LocalRequirementsRepository, PyPIRepository
 from ..repositories.base import BaseRepository
 from ..resolver import BacktrackingResolver, LegacyResolver

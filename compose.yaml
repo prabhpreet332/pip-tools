@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  python38:
+    image: python:3.8.16-slim-buster
+    user: root
+    working_dir: /code 
+    # command: >
+    #   bash -c "
+    #     pip install pip==22.0.3
+    #     # pip install tox
+    #     # tox devenv
+    #     pip install pip-tools==6.10.0
+    #   "
+    # volumes:
+    #   - .:/code
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50" # 50% of 1 CPU core
+          memory: 1G  # 1GB RAM
+
+    ulimits:
+      memlock:
+        hard: -1
+        soft: -1
+      nofile:
+        hard: 65535
+        soft: 65535
+      nproc: 65535
+
+    tty: true
+    stdin_open: true

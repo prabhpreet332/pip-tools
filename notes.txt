@@ -1,0 +1,277 @@
+1. pytest test_utils.py::test_get_sys_path_for_python_executable -s
+2. avoid using ipdb with pytest - 
+pytest test_utils.py::test_get_sys_path_for_python_executable --pdb
+just use 
+    import pdb; pdb.set_trace()
+
+
+=====================================
+=====================================
+Directions
+1. run the code and look at the output that is generated at the compile.cli
+this will lead us to the results that are produced by resolver
+
+2. figure out if the issue is in OutputWriter or resolver -- ^^above tells that 
+
+understand the unit tests for legacy resolver
+understand how does the pip works and how pip-tools enhance it
+
+
+
+=====================================
+=====================================
+
+
+
+
+root@1c734c4907dc:/code# 
+root@1c734c4907dc:/code# pip install pip==22.0.3
+root@1c734c4907dc:/code# pip install pip-tools==6.10.0
+root@1c734c4907dc:/code# l
+root@1c734c4907dc:/code# ls
+root@1c734c4907dc:/code# ..
+root@1c734c4907dc:/code# cd
+root@1c734c4907dc:~# ls
+root@1c734c4907dc:~# ls -alht
+root@1c734c4907dc:~# 
+root@1c734c4907dc:~# ls
+root@1c734c4907dc:~# touch a.in b.in c.in
+root@1c734c4907dc:~# echo "requests" > a.in 
+root@1c734c4907dc:~# cat a.in
+root@1c734c4907dc:~# cp a.in b.in
+root@1c734c4907dc:~# cp a.in c.in
+root@1c734c4907dc:~# cat a.in
+root@1c734c4907dc:~# cat b.in
+root@1c734c4907dc:~# cat b.in c.in
+root@1c734c4907dc:~# pip-compile --resolver=legacy --output-file=legacy-requirements.txt a.in b.in c.in
+root@1c734c4907dc:~# ls
+root@1c734c4907dc:~# cat legacy-requirements.txt 
+root@1c734c4907dc:~# pip-compile --resolver=backtracking --output-file=backtracking-requirements.txt a.in b.in c.in
+root@1c734c4907dc:~# pip-compile --resolver=backtracking --output-file=backtracking-reorder-requirements.txt a.in c.in b.in
+root@1c734c4907dc:~# ls
+root@1c734c4907dc:~# ls -alt
+root@1c734c4907dc:~# cd .cache/
+root@1c734c4907dc:~/.cache# l
+root@1c734c4907dc:~/.cache# ls
+root@1c734c4907dc:~/.cache# pip-tools/
+root@1c734c4907dc:~/.cache# ls
+root@1c734c4907dc:~/.cache# cd pip-tools/
+root@1c734c4907dc:~/.cache/pip-tools# ls
+root@1c734c4907dc:~/.cache/pip-tools# cat depcache-cp3.8.json 
+{"__format__": 1, "dependencies": {"certifi": {"2023.5.7": []}, "charset-normalizer": {"3.1.0": []}, "idna": {"3.4": []}, "requests": {"2.31.0": ["certifi>=2017.4.17", "charset-normalizer<4,>=2", "idna<4,>=2.5", "urllib3<3,>=1.21.1"]}, "urllib3": {"2.0.2": []}}}
+root@1c734c4907dc:~/.cache/pip-tools# l
+root@1c734c4907dc:~/.cache/pip-tools# ls
+root@1c734c4907dc:~/.cache/pip-tools# cd
+root@1c734c4907dc:~# ls
+root@1c734c4907dc:~# exit
+
+
+
+
+
+============================================================================
+
+
+
+
+
+
+
+
+
+root@ab67be612999:/code# %                                                                              ➜  pip-tools git:(main) ✗ dce python38 bash                                         [28/05/23 21:30:55]
+root@1c734c4907dc:/code# 
+root@1c734c4907dc:/code# pip install pip==22.0.3
+Collecting pip==22.0.3
+  Downloading pip-22.0.3-py3-none-any.whl (2.1 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 5.9 MB/s eta 0:00:00
+Installing collected packages: pip
+  Attempting uninstall: pip
+    Found existing installation: pip 22.0.4
+    Uninstalling pip-22.0.4:
+      Successfully uninstalled pip-22.0.4
+Successfully installed pip-22.0.3
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+root@1c734c4907dc:/code# pip install pip-tools==6.10.0
+Collecting pip-tools==6.10.0
+  Downloading pip_tools-6.10.0-py3-none-any.whl (53 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 53.4/53.4 KB 3.4 MB/s eta 0:00:00
+Requirement already satisfied: setuptools in /usr/local/lib/python3.8/site-packages (from pip-tools==6.10.0) (57.5.0)
+Collecting build
+  Downloading build-0.10.0-py3-none-any.whl (17 kB)
+Collecting click>=7
+  Downloading click-8.1.3-py3-none-any.whl (96 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 96.6/96.6 KB 9.5 MB/s eta 0:00:00
+Requirement already satisfied: wheel in /usr/local/lib/python3.8/site-packages (from pip-tools==6.10.0) (0.40.0)
+Requirement already satisfied: pip>=21.2 in /usr/local/lib/python3.8/site-packages (from pip-tools==6.10.0) (22.0.3)
+Collecting pyproject_hooks
+  Downloading pyproject_hooks-1.0.0-py3-none-any.whl (9.3 kB)
+Collecting tomli>=1.1.0
+  Downloading tomli-2.0.1-py3-none-any.whl (12 kB)
+Collecting packaging>=19.0
+  Downloading packaging-23.1-py3-none-any.whl (48 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 48.9/48.9 KB 4.3 MB/s eta 0:00:00
+Installing collected packages: tomli, packaging, click, pyproject_hooks, build, pip-tools
+Successfully installed build-0.10.0 click-8.1.3 packaging-23.1 pip-tools-6.10.0 pyproject_hooks-1.0.0 tomli-2.0.1
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+WARNING: You are using pip version 22.0.3; however, version 23.1.2 is available.
+You should consider upgrading via the '/usr/local/bin/python -m pip install --upgrade pip' command.
+root@1c734c4907dc:/code# l
+bash: l: command not found
+root@1c734c4907dc:/code# ls
+CHANGELOG.md	    LICENSE	 compose.yaml  img		   piptools	   tox.ini
+CODE_OF_CONDUCT.md  README.rst	 docs	       notes.txt	   pyproject.toml  venv
+CONTRIBUTING.md     codecov.yml  examples      pip_tools.egg-info  tests
+root@1c734c4907dc:/code# ..
+bash: ..: command not found
+root@1c734c4907dc:/code# cd
+root@1c734c4907dc:~# ls
+root@1c734c4907dc:~# ls -alht
+total 24K
+drwx------ 1 root root 4.0K May 28 16:01 .
+drwxr-xr-x 3 root root 4.0K May 28 16:01 .cache
+drwxr-xr-x 1 root root 4.0K May 28 16:01 ..
+-rw-r--r-- 1 root root  254 May 23 14:33 .wget-hsts
+-rw-r--r-- 1 root root  148 Aug 17  2015 .profile
+-rw-r--r-- 1 root root  570 Jan 31  2010 .bashrc
+root@1c734c4907dc:~# 
+root@1c734c4907dc:~# ls
+root@1c734c4907dc:~# touch a.in b.in c.in
+root@1c734c4907dc:~# echo "requests" > a.in 
+root@1c734c4907dc:~# cat a.in
+requests
+root@1c734c4907dc:~# cp a.in b.in
+root@1c734c4907dc:~# cp a.in c.in
+root@1c734c4907dc:~# cat a.in
+requests
+root@1c734c4907dc:~# cat b.in
+requests
+root@1c734c4907dc:~# cat b.in c.in
+requests
+requests
+root@1c734c4907dc:~# pip-compile --resolver=legacy --output-file=legacy-requirements.txt a.in b.in c.in
+WARNING: using legacy resolver is deprecated and will be removed in future versions. The default resolver will be change to 'backtracking' in 7.0.0 version. Specify --resolver=backtracking to silence this warning.
+#
+# This file is autogenerated by pip-compile with python 3.8
+# To update, run:
+#
+#    pip-compile --output-file=legacy-requirements.txt a.in b.in c.in
+#
+certifi==2023.5.7
+    # via requests
+charset-normalizer==3.1.0
+    # via requests
+idna==3.4
+    # via requests
+requests==2.31.0
+    # via
+    #   -r a.in
+    #   -r b.in
+    #   -r c.in
+urllib3==2.0.2
+    # via requests
+root@1c734c4907dc:~# ls
+a.in  b.in  c.in  legacy-requirements.txt
+root@1c734c4907dc:~# cat legacy-requirements.txt 
+#
+# This file is autogenerated by pip-compile with python 3.8
+# To update, run:
+#
+#    pip-compile --output-file=legacy-requirements.txt a.in b.in c.in
+#
+certifi==2023.5.7
+    # via requests
+charset-normalizer==3.1.0
+    # via requests
+idna==3.4
+    # via requests
+requests==2.31.0
+    # via
+    #   -r a.in
+    #   -r b.in
+    #   -r c.in
+urllib3==2.0.2
+    # via requests
+root@1c734c4907dc:~# pip-compile --resolver=backtracking --output-file=backtracking-requirements.txt a.in b.in c.in
+#
+# This file is autogenerated by pip-compile with python 3.8
+# To update, run:
+#
+#    pip-compile --output-file=backtracking-requirements.txt --resolver=backtracking a.in b.in c.in
+#
+certifi==2023.5.7
+    # via requests
+charset-normalizer==3.1.0
+    # via requests
+idna==3.4
+    # via requests
+requests==2.31.0
+    # via
+    #   -r a.in
+    #   -r c.in
+urllib3==2.0.2
+    # via requests
+root@1c734c4907dc:~# pip-compile --resolver=backtracking --output-file=backtracking-reorder-requirements.txt a.in c.in b.in
+#
+# This file is autogenerated by pip-compile with python 3.8
+# To update, run:
+#
+#    pip-compile --output-file=backtracking-reorder-requirements.txt --resolver=backtracking a.in b.in c.in
+#
+certifi==2023.5.7
+    # via requests
+charset-normalizer==3.1.0
+    # via requests
+idna==3.4
+    # via requests
+requests==2.31.0
+    # via
+    #   -r a.in
+    #   -r b.in
+urllib3==2.0.2
+    # via requests
+root@1c734c4907dc:~# ls
+a.in  backtracking-reorder-requirements.txt  c.in
+b.in  backtracking-requirements.txt	     legacy-requirements.txt
+root@1c734c4907dc:~# ls -alt
+total 48
+drwx------ 1 root root 4096 May 28 16:05 .
+-rw-r--r-- 1 root root  396 May 28 16:05 backtracking-reorder-requirements.txt
+-rw-r--r-- 1 root root  388 May 28 16:05 backtracking-requirements.txt
+-rw-r--r-- 1 root root  374 May 28 16:04 legacy-requirements.txt
+drwxr-xr-x 4 root root 4096 May 28 16:04 .cache
+-rw-r--r-- 1 root root    9 May 28 16:03 c.in
+-rw-r--r-- 1 root root    9 May 28 16:03 b.in
+-rw-r--r-- 1 root root    9 May 28 16:03 a.in
+drwxr-xr-x 1 root root 4096 May 28 16:01 ..
+-rw-r--r-- 1 root root  254 May 23 14:33 .wget-hsts
+-rw-r--r-- 1 root root  148 Aug 17  2015 .profile
+-rw-r--r-- 1 root root  570 Jan 31  2010 .bashrc
+root@1c734c4907dc:~# cd .cache/
+root@1c734c4907dc:~/.cache# l
+bash: l: command not found
+root@1c734c4907dc:~/.cache# ls
+pip  pip-tools
+root@1c734c4907dc:~/.cache# pip-tools/
+bash: pip-tools/: Is a directory
+root@1c734c4907dc:~/.cache# ls
+pip  pip-tools
+root@1c734c4907dc:~/.cache# cd pip-tools/
+root@1c734c4907dc:~/.cache/pip-tools# ls
+depcache-cp3.8.json  pkgs
+root@1c734c4907dc:~/.cache/pip-tools# cat depcache-cp3.8.json 
+{"__format__": 1, "dependencies": {"certifi": {"2023.5.7": []}, "charset-normalizer": {"3.1.0": []}, "idna": {"3.4": []}, "requests": {"2.31.0": ["certifi>=2017.4.17", "charset-normalizer<4,>=2", "idna<4,>=2.5", "urllib3<3,>=1.21.1"]}, "urllib3": {"2.0.2": []}}}root@1c734c4907dc:~/.cache/pip-tools# l
+bash: l: command not found
+root@1c734c4907dc:~/.cache/pip-tools# ls
+depcache-cp3.8.json  pkgs
+root@1c734c4907dc:~/.cache/pip-tools# cd
+root@1c734c4907dc:~# ls
+a.in  backtracking-reorder-requirements.txt  c.in
+b.in  backtracking-requirements.txt	     legacy-requirements.txt
+root@1c734c4907dc:~# exit
+➜  pip-tools git:(main) ✗ dcdn --volumes --remove-orphans                           [28/05/23 22:25:20]
+[+] Running 2/2
+ ✔ Container pip-tools-python38-1  Removed                                                        10.3s 
+ ✔ Network pip-tools_default       Removed                                                         0.4s 
+➜  pip-tools git:(main) ✗                                                           [28/05/23 22:25:33]
+

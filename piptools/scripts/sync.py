@@ -17,7 +17,7 @@ from .. import sync
 from .._compat import parse_requirements
 from .._compat.pip_compat import Distribution
 from ..exceptions import PipToolsError
-from ..logging import log
+from ..custom_logging import log
 from ..repositories import PyPIRepository
 from ..utils import (
     flat_map,

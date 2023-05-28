@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from piptools.logging import LogContext
+from piptools.custom_logging import LogContext
 
 
 def test_indentation(runner):
