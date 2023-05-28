@@ -18,6 +18,10 @@ understand how does the pip works and how pip-tools enhance it
 
 
 
+(venv) ➜  examples git:(main) ✗ python ../piptools compile --resolver=legacy --output-file=legacy-requirements.txt a.in b.in c.in                                                              [29/05/23 01:27:46]
+
+
+
 =====================================
 =====================================
 
